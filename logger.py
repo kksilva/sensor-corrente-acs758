@@ -38,6 +38,7 @@ def main():
     with open(args.saida, "w", newline="") as f:
         w = csv.writer(f, delimiter=";")
         w.writerow(["t_s", "adc", "tensao_v", "corrente_a", "marcador"])
+        f.flush()
         print(f"Gravando em {args.saida}. ENTER=marca degrau, Ctrl+C=encerra.")
         try:
             while True:
