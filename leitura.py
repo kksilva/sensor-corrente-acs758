@@ -9,6 +9,9 @@ ser = serial.Serial("/dev/ttyACM0", 115200, timeout=3)
 time.sleep(2)
 ser.reset_input_buffer()
 
+arquivo = open("dados_ensaio.csv", "w")
+arquivo.write("adc;tensao_v;corrente_a\n")
+
 # setup
 soma = 0.0
 for i in range(500):
@@ -32,5 +35,10 @@ while True:
     print("ADC: " + str(round(adcMedio, 1))
           + "  Tensao: " + str(round(tensao - offsetSensor, 4)) + " V"
           + "  Corrente: " + str(round(corrente, 1)) + " A")
+
+    arquivo.write(str(round(adcMedio, 1)) + ";"
+                  + str(round(tensao - offsetSensor, 4)) + ";"
+                  + str(round(corrente, 1)) + "\n")
+    arquivo.flush()
 
     time.sleep(0.5)
