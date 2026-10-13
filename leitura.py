@@ -16,7 +16,9 @@ arquivo.write("adc;tensao_v;corrente_a\n")
 # setup
 soma = 0.0
 for i in range(500):
-    linha = ser.readline().decode(errors="replace")
+    linha = ""
+    while "ADC:" not in linha:
+        linha = ser.readline().decode(errors="replace")
     soma += float(linha.split("ADC:")[1].split()[0])
 adcMedioOffset = soma / 500.0
 offsetSensor = adcMedioOffset * 3.3 / 4095.0
@@ -27,7 +29,9 @@ print("Offset calibrado: " + str(round(offsetSensor, 4)) + " V")
 while True:
     soma = 0.0
     for i in range(100):
-        linha = ser.readline().decode(errors="replace")
+        linha = ""
+        while "ADC:" not in linha:
+            linha = ser.readline().decode(errors="replace")
         soma += float(linha.split("ADC:")[1].split()[0])
     adcMedio = soma / 100.0
     tensao = adcMedio * 3.3 / 4095.0
