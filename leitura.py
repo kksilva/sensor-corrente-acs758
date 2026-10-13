@@ -9,7 +9,8 @@ ser = serial.Serial("/dev/ttyACM0", 115200, timeout=3)
 time.sleep(2)
 ser.reset_input_buffer()
 
-arquivo = open("dados_ensaio.csv", "w")
+nome = input("Nome do arquivo CSV (ex.: serieA_vazio.csv): ")
+arquivo = open(nome, "x")  # "x" nao sobrescreve: da erro se o arquivo ja existir
 arquivo.write("adc;tensao_v;corrente_a\n")
 
 # setup
