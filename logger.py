@@ -48,11 +48,17 @@ def main():
                 adc, tensao, corrente = m.groups()
                 marcador = ""
                 # marca de degrau sem bloquear a leitura serial
-                import select
+                if sys.stdin.isatty():
+                    import select
 
-                if select.select([sys.stdin], [], [], 0)[0]:
-                    sys.stdin.readline()
-                    marcador = input("Descricao do degrau (ex.: PWM=40%): ").strip()
+                    if select.select([sys.stdin], [], [], 0)[0]:
+                        sys.stdin.readline()
+                        try:
+                            marcador = input(
+                                "Descricao do degrau (ex.: PWM=40%): "
+                            ).strip()
+                        except EOFError:
+                            pass
                 w.writerow(
                     [f"{time.time() - t0:.2f}", adc, tensao, corrente, marcador]
                 )
