@@ -26,13 +26,13 @@ void loop() {
   }
   float adcMedio = soma / 100.0;
   float tensao = adcMedio * 3.3 / 4095.0;
-  float corrente = (offsetSensor - tensao) / sensibilidade;
+  float corrente = (tensao - offsetSensor) / sensibilidade;
 
   Serial.print("ADC: ");
   Serial.print(adcMedio, 1);
 
   Serial.print("  Tensao: ");
-  Serial.print(offsetSensor - tensao, 4);
+  Serial.print(tensao - offsetSensor, 4);
   Serial.print(" V");
 
   Serial.print("  Corrente: ");
